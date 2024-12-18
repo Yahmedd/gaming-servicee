@@ -1,0 +1,49 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Service Index{% endblock %}
+
+{% block body %}
+    <h1>Service Index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Available</th>
+            <th>Created At</th>
+            <th>Game</th> {# Add Game column #}
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for service in services %}
+            <tr>
+                <td>{{ service.id }}</td>
+                <td>{{ service.name }}</td>
+                <td>{{ service.description }}</td>
+                <td>{{ service.price }}</td>
+                <td>{{ service.available ? 'Yes' : 'No' }}</td>
+                <td>{{ service.createdAt ? service.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ service.game ? service.game.title : 'No Game' }}</td> {# Display the game title, or 'No Game' if none is associated #}
+                <td>
+                    <a href="{{ path('app_service_show', {'id': service.id}) }}">Show</a>
+                    <a href="{{ path('app_service_edit', {'id': service.id}) }}">Edit</a>
+                    <form method="post" action="{{ path('app_service_delete', {'id': service.id}) }}" style="display:inline;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ service.id) }}">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">No records found</td> {# Update colspan to match the number of columns #}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_service_new') }}">Create New</a>
+{% endblock %}

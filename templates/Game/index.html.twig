@@ -1,0 +1,47 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Game Index{% endblock %}
+
+{% block body %}
+    <h1>Game Index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Rating</th>
+            <th>Created At</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for game in games %}
+            <tr>
+                <td>{{ game.id }}</td>
+                <td>{{ game.title }}</td>
+                <td>{{ game.description }}</td>
+                <td>{{ game.category }}</td>
+                <td>{{ game.rating }}</td>
+                <td>{{ game.createdAt ? game.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_game_show', {'id': game.id}) }}">Show</a>
+                    <a href="{{ path('app_game_edit', {'id': game.id}) }}">Edit</a>
+                    <form method="post" action="{{ path('app_game_delete', {'id': game.id}) }}" style="display:inline;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ game.id) }}">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_game_new') }}">Create New</a>
+{% endblock %}

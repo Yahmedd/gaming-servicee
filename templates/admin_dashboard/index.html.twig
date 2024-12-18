@@ -1,0 +1,94 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block body %}
+    <h1>Admin Dashboard</h1>
+
+    <!-- Games Stats Card -->
+    <div class="card" style="width: 24rem; margin-bottom: 20px;">
+        <div class="card-header">
+            <h5>Games Stats</h5>
+        </div>
+        <div class="card-body">
+            <canvas id="gamesChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Reservations Stats Card -->
+    <div class="card" style="width: 24rem; margin-bottom: 20px;">
+        <div class="card-header">
+            <h5>Reservations Stats</h5>
+        </div>
+        <div class="card-body">
+            <canvas id="reservationsChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Services Stats Card -->
+    <div class="card" style="width: 24rem; margin-bottom: 20px;">
+        <div class="card-header">
+            <h5>Services Stats</h5>
+        </div>
+        <div class="card-body">
+            <canvas id="servicesChart"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Fetching the data for charts from your controller
+        const gamesStats = {{ games_stats|json_encode()|raw }};
+        const reservationsStats = {{ reservations_stats|json_encode()|raw }};
+        const servicesStats = {{ services_stats|json_encode()|raw }};
+
+        // Game Stats Chart (Example: Bar chart)
+        const gamesCtx = document.getElementById('gamesChart').getContext('2d');
+        new Chart(gamesCtx, {
+            type: 'bar',
+            data: {
+                labels: gamesStats.labels,
+                datasets: [{
+                    label: 'Games Stats',
+                    data: gamesStats.data,
+                    backgroundColor: '#4e73df',
+                    borderColor: '#2e59d9',
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        // Reservation Stats Chart (Example: Line chart)
+        const reservationsCtx = document.getElementById('reservationsChart').getContext('2d');
+        new Chart(reservationsCtx, {
+            type: 'line',
+            data: {
+                labels: reservationsStats.labels,
+                datasets: [{
+                    label: 'Reservations Stats',
+                    data: reservationsStats.data,
+                    backgroundColor: '#1cc88a',
+                    borderColor: '#17a673',
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        // Services Stats Chart (Example: Pie chart)
+        const servicesCtx = document.getElementById('servicesChart').getContext('2d');
+        new Chart(servicesCtx, {
+            type: 'pie',
+            data: {
+                labels: servicesStats.labels,
+                datasets: [{
+                    label: 'Services Stats',
+                    data: servicesStats.data,
+                    backgroundColor: ['#FF5733', '#33FF57', '#3357FF'],
+                    borderColor: '#fff',
+                    borderWidth: 1
+                }]
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,17 @@
+# Symfony directories
+/var/
+/vendor/
+/node_modules/
+
+# Configuration
+.env
+.env.local
+.env.*
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+
+# Logs and debug
+*.log
