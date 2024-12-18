@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/service')]
 final class ServiceController extends AbstractController
 {
-    #[Route(name: 'app_service_index', methods: ['GET'])]
+    #[Route('', name: 'app_service_index', methods: ['GET'])]
     public function index(ServiceRepository $serviceRepository): Response
     {
         return $this->render('service/index.html.twig', [
@@ -42,6 +42,7 @@ final class ServiceController extends AbstractController
         ]);
     }
 
+
     #[Route('/{id}', name: 'app_service_show', methods: ['GET'])]
     public function show(Service $service): Response
     {
@@ -68,10 +69,11 @@ final class ServiceController extends AbstractController
         ]);
     }
 
+
     #[Route('/{id}', name: 'app_service_delete', methods: ['POST'])]
     public function delete(Request $request, Service $service, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$service->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $service->getId(), $request->request->get('_token'))) {
             $entityManager->remove($service);
             $entityManager->flush();
         }
