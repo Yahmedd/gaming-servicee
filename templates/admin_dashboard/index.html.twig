@@ -1,3 +1,4 @@
+{# templates/admin_dashboard/index.html.twig #}
 {% extends 'back.html.twig' %}
 
 {% block title %}Admin Dashboard{% endblock %}
@@ -5,7 +6,10 @@
 {% block body %}
     <h1>Admin Dashboard</h1>
 
-    <!-- Games Stats Card -->
+    <!-- Link to Categories Management -->
+    <a href="{{ path('admin_categories') }}" class="btn btn-secondary">Manage Categories</a>
+
+    <!-- Existing Stats Cards -->
     <div class="card" style="width: 24rem; margin-bottom: 20px;">
         <div class="card-header">
             <h5>Games Stats</h5>
@@ -15,7 +19,6 @@
         </div>
     </div>
 
-    <!-- Reservations Stats Card -->
     <div class="card" style="width: 24rem; margin-bottom: 20px;">
         <div class="card-header">
             <h5>Reservations Stats</h5>
@@ -25,7 +28,6 @@
         </div>
     </div>
 
-    <!-- Services Stats Card -->
     <div class="card" style="width: 24rem; margin-bottom: 20px;">
         <div class="card-header">
             <h5>Services Stats</h5>
@@ -42,7 +44,10 @@
         const gamesStats = {{ games_stats|json_encode()|raw }};
         const reservationsStats = {{ reservations_stats|json_encode()|raw }};
         const servicesStats = {{ services_stats|json_encode()|raw }};
+        const categoriesStats = {{ services_stats|json_encode()|raw }};
 
+        // Game Stats Chart
+        const gamesCtx = document.getElementById
         // Game Stats Chart (Example: Bar chart)
         const gamesCtx = document.getElementById('gamesChart').getContext('2d');
         new Chart(gamesCtx, {

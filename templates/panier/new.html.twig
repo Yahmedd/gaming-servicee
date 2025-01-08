@@ -1,0 +1,13 @@
+{# templates/panier/new.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Create New Panier{% endblock %}
+
+{% block body %}
+    <h1>Create New Panier</h1>
+
+    {{ include('panier/_form.html.twig', { 'totalPrice': totalPrice }) }} {# Pass totalPrice to the form template #}
+
+    <a href="{{ path('app_panier_index') }}">back to list</a>
+{% endblock %}

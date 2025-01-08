@@ -1,0 +1,11 @@
+{# templates/panier/_form.html.twig #}
+
+{{ form_start(form) }}
+    {{ form_row(form.user) }}
+<div>
+    <h3>Select Games</h3>
+    {{ form_row(form.games) }}
+</div>
+<h4>Total Price: {{ totalPrice | number_format(2, '.', ',') }} €</h4> {# Display the total price #}
+<button class="btn">Create Panier</button>
+{{ form_end(form) }}

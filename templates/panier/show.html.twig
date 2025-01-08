@@ -1,0 +1,41 @@
+{# templates/panier/show.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Your Cart{% endblock %}
+
+{% block body %}
+<div class="cart-container">
+    <h1>Your Cart</h1>
+    
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Game</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for game in panier.games %}
+            <tr>
+                <td>{{ game.name }}</td>
+                <td>{{ game.description }}</td>
+                <td>${{ game.price|number_format(2, '.', ',') }}</td>
+                <td>
+                    <form method="post" action="{{ path('app_game_delete', {'id': game.id}) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ game.id) }}">
+                        <button type="submit" class="btn-remove">Remove</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="cart-summary">
+        <h2>Total Price: ${{ totalPrice|number_format(2, '.', ',') }}</h2>
+        <a href="{{ path('checkout_route') }}" class="btn-checkout">Proceed to Checkout</a>
+    </div>
+</div>
+{% endblock %}

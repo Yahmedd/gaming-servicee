@@ -27,7 +27,6 @@
                 <td>{{ game.rating }}</td>
                 <td>{{ game.createdAt ? game.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_game_show', {'id': game.id}) }}">Show</a>
                     <a href="{{ path('app_game_edit', {'id': game.id}) }}">Edit</a>
                     <form method="post" action="{{ path('app_game_delete', {'id': game.id}) }}" style="display:inline;">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ game.id) }}">

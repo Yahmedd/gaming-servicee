@@ -1,0 +1,23 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}Available Services{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-5">Services</h1>
+        <div class="row">
+            {% for service in services %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ service.name }}</h5>
+                            <p class="card-text">{{ service.description }}</p>
+                            <p><strong>Price:</strong> {{ service.price }}</p>
+                            <a href="{{ path('user_reserve', {id: service.id}) }}" class="btn btn-primary">Reserve</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

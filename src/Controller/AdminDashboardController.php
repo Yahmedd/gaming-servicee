@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\GameRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\ServiceRepository;
+use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminDashboardController extends AbstractController
 {
     #[Route('/admin', name: 'admin_dashboard')]
-    public function index(GameRepository $gameRepository, ReservationRepository $reservationRepository, ServiceRepository $serviceRepository, EntityManagerInterface $entityManager)
+    public function index(GameRepository $gameRepository, ReservationRepository $reservationRepository, ServiceRepository $serviceRepository ,CategorieRepository $categorieRepository, EntityManagerInterface $entityManager)
     {
         // Get the stats for games
         $gamesStats = $this->getGamesStats($gameRepository);
@@ -24,10 +25,14 @@ class AdminDashboardController extends AbstractController
         // Get the stats for services
         $servicesStats = $this->getServicesStats($serviceRepository);
 
+        // Get the stats for categories
+        $categoriesStats = $this->getCategoriesStats($categorieRepository); // Fetch category stats
+
         return $this->render('admin_dashboard/index.html.twig', [
             'games_stats' => $gamesStats,
             'reservations_stats' => $reservationsStats,
             'services_stats' => $servicesStats,
+            'categories_stats' => $categoriesStats,
         ]);
     }
 
@@ -113,6 +118,26 @@ class AdminDashboardController extends AbstractController
 
         return ['labels' => $labels, 'data' => $data];
     }
+    // Add this method to your AdminDashboardController
+    private function getCategoriesStats(CategorieRepository $categorieRepository)
+    {
+        // Count the number of categories
+        $query = $categorieRepository->createQueryBuilder('c')
+            ->select('c.name, COUNT(c.id) as count')
+            ->groupBy('c.id')
+            ->getQuery();
+
+        $results = $query->getResult();
+
+        $labels = [];
+        $data = [];
+        foreach ($results as $result) {
+            $labels[] = $result['name'];
+            $data[] = $result['count'];
+        }
+
+        return ['labels' => $labels, 'data' => $data];
+    }
 
     #[Route('/admin/services', name: 'admin_service_index')]
     public function services(): Response
@@ -128,6 +153,13 @@ class AdminDashboardController extends AbstractController
         // Logic to fetch reservations would go here
         return $this->render('admin_dashboard/reservations/index.html.twig', [
             // Pass any necessary data to the view
+        ]);
+    }
+    #[Route('/admin/categories', name: 'admin_categories')]
+    public function categories(CategorieRepository $categorieRepository): Response
+    {
+        return $this->render('admin_dashboard/categorie/index.html.twig', [
+            'categories' => $categorieRepository->findAll(),
         ]);
     }
 }

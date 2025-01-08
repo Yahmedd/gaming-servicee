@@ -17,7 +17,7 @@ class Game
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $title = null;
+    private ?string $title = null;  // 'title' instead of 'name'
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
@@ -44,6 +44,7 @@ class Game
         return $this->id;
     }
 
+    // Getter for the title property
     public function getTitle(): ?string
     {
         return $this->title;
