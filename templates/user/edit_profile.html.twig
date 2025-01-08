@@ -1,0 +1,27 @@
+{% extends 'front.html.twig' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2>Edit Your Profile</h2>
+
+        {# Display any success message if the form was submitted successfully #}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_row(form.firstName) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.lastName) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.email) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.save) }}
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

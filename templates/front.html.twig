@@ -1,0 +1,98 @@
+{# templates/front.html.twig #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>{% block title %}Lugx Gaming{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/templatemo-lugx-gaming.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+</head>
+
+<body>
+
+<!-- ***** Preloader Start ***** -->
+<div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+        <span class="dot"></span>
+        <div class="dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+<!-- ***** Preloader End ***** -->
+
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <a href="{{ path('app_homepage') }}" class="logo">
+                        <img src="{{ asset('assets/images/logo.png') }}" alt="" style="width: 158px;">
+                    </a>
+                    <ul class="nav">
+                        <li><a href="{{ path('app_homepage') }}">Home</a></li>
+                        <li><a href="{{ path('app_shop') }}">Our Shop</a></li>
+                        <li><a href="{{ path('app_product_details') }}">Product Details</a></li>
+                        <li><a href="{{ path('app_contact') }}">Contact Us</a></li>
+
+                        {% if app.user %}
+                            {# Display user details if logged in #}
+                            <li class="nav-item">
+                                <span>Welcome, {{ app.user.firstName }} {{ app.user.lastName }} ({{ app.user.email }})</span>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('app_edit_profile') }}" class="btn btn-info">Edit Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('app_logout') }}" class="btn btn-secondary">Logout</a>
+                            </li>
+                        {% else %}
+                            {# Show login button if not logged in #}
+                            <li><a href="{{ path('app_login') }}">Sign In</a></li>
+                        {% endif %}
+                    </ul>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ***** Header Area End ***** -->
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <div class="container">
+        <div class="col-lg-12">
+            <p>Copyright © 2048 LUGX Gaming Company. All rights reserved. &nbsp;&nbsp; <a rel="nofollow" href="https://templatemo.com" target="_blank">Design: TemplateMo</a></p>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/isotope.min.js') }}"></script>
+<script src="{{ asset('assets/js/owl-carousel.js') }}"></script>
+<script src="{{ asset('assets/js/counter.js') }}"></script>
+<script src="{{ asset('assets/js/custom.js') }}"></script>
+
+</body>
+</html>
