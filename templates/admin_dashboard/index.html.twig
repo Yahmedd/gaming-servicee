@@ -6,8 +6,6 @@
 {% block body %}
     <h1>Admin Dashboard</h1>
 
-    <!-- Link to Categories Management -->
-    <a href="{{ path('admin_categories') }}" class="btn btn-secondary">Manage Categories</a>
 
     <!-- Existing Stats Cards -->
     <div class="card" style="width: 24rem; margin-bottom: 20px;">
@@ -44,7 +42,7 @@
         const gamesStats = {{ games_stats|json_encode()|raw }};
         const reservationsStats = {{ reservations_stats|json_encode()|raw }};
         const servicesStats = {{ services_stats|json_encode()|raw }};
-        const categoriesStats = {{ services_stats|json_encode()|raw }};
+        const categoriesStats = {{ categories_stats|json_encode()|raw }};
 
         // Game Stats Chart
         const gamesCtx = document.getElementById
@@ -89,6 +87,21 @@
                 datasets: [{
                     label: 'Services Stats',
                     data: servicesStats.data,
+                    backgroundColor: ['#FF5733', '#33FF57', '#3357FF'],
+                    borderColor: '#fff',
+                    borderWidth: 1
+                }]
+            }
+        });
+        // Categories Stats Chart (Example: Pie chart)
+        const categoriesCtx = document.getElementById('categoriesChart').getContext('2d');
+        new Chart(categoriesCtx, {
+            type: 'pie',
+            data: {
+                labels: categoriesStats.labels,
+                datasets: [{
+                    label: 'Categories Stats',
+                    data: categoriesStats.data,
                     backgroundColor: ['#FF5733', '#33FF57', '#3357FF'],
                     borderColor: '#fff',
                     borderWidth: 1
