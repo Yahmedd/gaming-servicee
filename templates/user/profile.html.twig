@@ -1,12 +1,11 @@
 {% extends 'front.html.twig' %}
 
-{% block title %}Your Profile{% endblock %}
+{% block title %}My Profile{% endblock %}
 
-{% block content %}
-    <div class="profile-section">
-        <h1>Your Profile</h1>
-        <p><strong>First Name:</strong> {{ user.firstName }}</p>
-        <p><strong>Last Name:</strong> {{ user.lastName }}</p>
+{% block body %}
+    <div class="container">
+        <h1 class="mt-5">My Profile</h1>
         <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Role:</strong> {{ user.roles|join(', ') }}</p>
     </div>
 {% endblock %}
